@@ -27,7 +27,7 @@ export const categories = [
         id: 1,
         img: "https://cdn.shopify.com/s/files/1/0258/6024/3538/collections/Mens_Clothes_Sale_1200x1200.jpg?v=1589623819",
         title: "SALE",
-        cat: "men"
+        cat: "sale"
     },
     {
         id: 2,
