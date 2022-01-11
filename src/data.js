@@ -27,16 +27,19 @@ export const categories = [
         id: 1,
         img: "https://cdn.shopify.com/s/files/1/0258/6024/3538/collections/Mens_Clothes_Sale_1200x1200.jpg?v=1589623819",
         title: "SALE",
+        cat: "men"
     },
     {
         id: 2,
         img: "https://p0.pxfuel.com/preview/1006/203/797/the-man-in-the-suit-costume-man-guy.jpg",
         title: "SUITS",
+        cat: "suits"
     },
     {
         id: 3,
         img: "https://i.etsystatic.com/8957419/r/il/48d852/3264378987/il_794xN.3264378987_rjxi.jpg",
         title: "TROUSERS",
+        cat: "trousers"
     }
 
 ];
