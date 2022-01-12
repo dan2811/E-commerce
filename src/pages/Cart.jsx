@@ -5,6 +5,13 @@ import Navbar from "../components/Navbar";
 import { Add, Remove } from "@mui/icons-material";
 import { mobile } from "../responsive";
 import { useSelector } from "react-redux";
+import StripeCheckout from "react-stripe-checkout";
+import { useEffect, useState } from "react";
+import { userRequest } from "../requestMethods";
+import { useNavigate } from "react-router-dom";
+
+
+const KEY = process.env.REACT_APP_STRIPE_KEY;
 
 const Container = styled.div``;
 
@@ -154,7 +161,6 @@ const SummaryItemText = styled.span`
 const SummaryItemPrice = styled.span``;
 
 const Button = styled.button`
-
 width: 100%;
 padding: 10px;
 background-color: black;
@@ -165,6 +171,29 @@ font-weight: 600;
 
 const Cart = () => {
     const cart = useSelector(state => state.cart);
+    const [stripeToken, setStripeToken] = useState(null);
+    const navigate = useNavigate();
+
+    const onToken = (token) =>{
+        setStripeToken(token);
+    };
+
+    useEffect(()=>{
+        const makeRequest = async ()=>{
+            try{
+                const res = await userRequest.post("/checkout/payment", {
+                tokenId: stripeToken.id,
+                amount: cart.total*100,
+            });
+            navigate("/success", {
+                stripeData: res.data,
+                products: cart,
+        });
+            }catch{}
+        };
+        stripeToken && cart.total >= 1 && makeRequest();
+    }, [stripeToken, cart.total, navigate]);
+
     return (
         <Container>
             <Navbar />
@@ -209,7 +238,7 @@ const Cart = () => {
                         <SummaryTitle>ORDER SUMMARY</SummaryTitle>
                         <SummaryItem>
                             <SummaryItemText>Subtotal</SummaryItemText>
-                            <SummaryItemPrice>£ 20.00</SummaryItemPrice>
+                            <SummaryItemPrice>£ {cart.total}</SummaryItemPrice>
                         </SummaryItem>
 
                         <SummaryItem>
@@ -224,9 +253,20 @@ const Cart = () => {
 
                         <SummaryItem type="total">
                             <SummaryItemText>Total</SummaryItemText>
-                            <SummaryItemPrice>£ 20.00</SummaryItemPrice>
+                            <SummaryItemPrice>£ {cart.total}</SummaryItemPrice>
                         </SummaryItem>
-                        <Button>CHECKOUT</Button>
+                        <StripeCheckout
+                            name="SHOP."
+                            billingAddress
+                            shippingAddress
+                            description={`Your total is $${cart.total}.`}
+                            amount={cart.total*100}
+                            token={onToken}
+                            stripeKey={KEY}
+                            currency="GBP"
+                        >
+                            <Button>CHECKOUT</Button>
+                            </StripeCheckout> 
                     </Summary>
                 </Bottom>
             </Wrapper>
