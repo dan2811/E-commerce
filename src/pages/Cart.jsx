@@ -4,6 +4,7 @@ import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import { Add, Remove } from "@mui/icons-material";
 import { mobile } from "../responsive";
+import { useSelector } from "react-redux";
 
 const Container = styled.div``;
 
@@ -87,6 +88,7 @@ width: 20px;
 height: 20px;
 border-radius: 50%;
 background-color: ${props=>props.color};
+border: 1px solid black;
 `;
 
 const ProductSize = styled.span``;
@@ -162,6 +164,7 @@ font-weight: 600;
 
 
 const Cart = () => {
+    const cart = useSelector(state => state.cart);
     return (
         <Container>
             <Navbar />
@@ -179,45 +182,28 @@ const Cart = () => {
                 <Bottom>
 
                     <Info>
+                    {cart.products?.map(product=>(
                         <Product>
                             <ProductDetail>
-                                <Image src="https://fakestoreapi.com/img/71-3HjGNDUL._AC_SY879._SX._UX._SY._UY_.jpg" />
+                                <Image src={product.img} />
                                 <Details>
-                                    <ProductName><b>Item: </b>TheNameOfTheItem</ProductName>
-                                    <ProductId><b>ID: </b>98739873739</ProductId>
-                                    <ProductColor color="black"/>
-                                    <ProductSize><b>Size: </b>L</ProductSize>
+                                    <ProductName><b>Item: </b>{product.title}</ProductName>
+                                    <ProductId><b>ID: </b>{product._id}</ProductId>
+                                    <ProductColor color={product.color}/>
+                                    <ProductSize><b>Size: </b>{product.size}</ProductSize>
                                 </Details>
                             </ProductDetail>
                             <PriceDetail>
                                 <ProductAmountContainer>
                                     <Add />
-                                        <ProductAmount>2</ProductAmount>
+                                        <ProductAmount>{product.quantity}</ProductAmount>
                                     <Remove />
                                 </ProductAmountContainer>
-                                <ProductPrice>£ 25.00</ProductPrice>
+                                <ProductPrice>£ {product.price*product.quantity}</ProductPrice>
                             </PriceDetail>
                         </Product>
-                        <Hr />
-                        <Product>
-                            <ProductDetail>
-                                <Image src="https://fakestoreapi.com/img/71-3HjGNDUL._AC_SY879._SX._UX._SY._UY_.jpg" />
-                                <Details>
-                                    <ProductName><b>Item: </b>TheNameOfTheItem</ProductName>
-                                    <ProductId><b>ID: </b>98739873739</ProductId>
-                                    <ProductColor color="black"/>
-                                    <ProductSize><b>Size: </b>L</ProductSize>
-                                </Details>
-                            </ProductDetail>
-                            <PriceDetail>
-                                <ProductAmountContainer>
-                                    <Add />
-                                        <ProductAmount>2</ProductAmount>
-                                    <Remove />
-                                </ProductAmountContainer>
-                                <ProductPrice>£ 25.00</ProductPrice>
-                            </PriceDetail>
-                        </Product>
+                    ))}
+                    <Hr />
                     </Info>
                     <Summary>
                         <SummaryTitle>ORDER SUMMARY</SummaryTitle>

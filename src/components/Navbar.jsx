@@ -4,6 +4,7 @@ import { Badge } from '@material-ui/core'
 import styled from 'styled-components';
 import {mobile, tablet, desktop} from '../responsive';
 import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 const Container = styled.div`
     height: 60px;
@@ -87,15 +88,23 @@ const Navbar = () => {
                         <Search style={{color:"gray", fontSize: 16}}/>
                     </SearchContainer>
                 </Left>
+                <Link to="/">
                 <Center><Logo>SHOP.</Logo></Center>
+                </Link>
                 <Right>
+                    <Link to="/register">
                     <MenuItem>REGISTER</MenuItem>
+                    </Link>
+                    <Link to="/login">
                     <MenuItem>SIGN IN</MenuItem>
+                    </Link>
+                    <Link to="/cart">
                     <MenuItem>
                         <Badge badgeContent={quanity} color="primary">
                             <ShoppingCartOutlined />
                         </Badge>
                     </MenuItem>
+                    </Link>
                 </Right>
             </Wrapper>
             

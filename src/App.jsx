@@ -32,7 +32,7 @@ const App = () => {
         <Route path="/login" element={user ? <Navigate to="/"/> : <Login/>} />
       </Routes>
       <Routes>
-        <Route path="/register" element={user ? <Navigate to="/"/> : <Register />} />
+        <Route path="/register" element={<Register />} />
       </Routes>
     </Router>
   );
