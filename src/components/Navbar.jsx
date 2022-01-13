@@ -3,8 +3,9 @@ import { Search, ShoppingCartOutlined } from '@material-ui/icons';
 import { Badge } from '@material-ui/core'
 import styled from 'styled-components';
 import {mobile, tablet, desktop} from '../responsive';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch as dispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { logOut } from '../redux/userSlice';
 
 const Container = styled.div`
     height: 60px;
@@ -77,6 +78,14 @@ const MenuItem = styled.div`
 const Navbar = () => {
 
     const quanity = useSelector(state=>state.cart.quantity);
+    let user = useSelector(state => state.user.currentUser);
+
+    const handleSignOut = (e) => {
+        e.preventDefault();
+        console.log(`sign out clicked!`);
+        window.location.reload();
+    };
+
 
     return (
         <Container>
@@ -92,12 +101,23 @@ const Navbar = () => {
                 <Center><Logo>SHOP.</Logo></Center>
                 </Link>
                 <Right>
+                    {user ? `Hello, ${user.username}`
+                    :
                     <Link to="/register">
                     <MenuItem>REGISTER</MenuItem>
-                    </Link>
+                    </Link> 
+                    }
+
+                    {user ? 
+                    <Link to="/login">
+                    <MenuItem onClick={handleSignOut}>SIGN OUT</MenuItem> 
+                    </Link> 
+                    :
                     <Link to="/login">
                     <MenuItem>SIGN IN</MenuItem>
                     </Link>
+                    }
+
                     <Link to="/cart">
                     <MenuItem>
                         <Badge badgeContent={quanity} color="primary">
