@@ -4,7 +4,7 @@ import { Badge } from '@material-ui/core'
 import styled from 'styled-components';
 import {mobile, tablet, desktop} from '../responsive';
 import { useSelector, useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { logOut } from '../redux/userSlice';
 
 const Container = styled.div`
@@ -62,15 +62,29 @@ display: flex;
 align-items: center;
 justify-content: flex-end;
 ${mobile({flex: 2, justifyContent: "center", paddingRight: "5px" })}
-
 `;
 
 const MenuItem = styled.div`
     font-size: 14px;
     cursor: pointer;
-    margin-left: 25px;
     ${mobile({fontSize: "12px", marginLeft: "10px"})}
+`;
 
+const StyledLink = styled(Link)`
+text-decoration: none;
+color: black;
+
+&:focus, &:hover, &:visited, &:link, &:active {
+    text-decoration: none;
+}
+`;
+
+const ButtonContainer = styled.div`
+border: 0.5px solid black;
+border-radius: 20px;
+padding: 10px;
+margin: 0px 10px;
+cursor: pointer;
 `;
 
 
@@ -80,16 +94,16 @@ const Navbar = () => {
     const quanity = useSelector(state=>state.cart.quantity);
     let user = useSelector(state => state.user);
     const dispatch = useDispatch();
+    let navigate = useNavigate();
 
 
     const handleSignOut = (e) => {
         e.preventDefault();
         console.log(`sign out clicked!`);
         dispatch(logOut());
-        
+        navigate("/");
     };
 
-    console.log(user);
 
     return (
         <Container>
@@ -101,34 +115,39 @@ const Navbar = () => {
                         <Search style={{color:"gray", fontSize: 16}}/>
                     </SearchContainer>
                 </Left>
-                <Link to="/">
+                <StyledLink to="/">
                 <Center><Logo>SHOP.</Logo></Center>
-                </Link>
+                </StyledLink>
                 <Right>
-                    {user.currentUser ? `Hello, ${user.currentUser.username}`
-                    :
-                    <Link to="/register">
-                    <MenuItem>REGISTER</MenuItem>
-                    </Link> 
-                    }
+                        {user.currentUser ? `Hello, ${user.currentUser.username}`
+                        :
+                    <ButtonContainer>
+                        <StyledLink to="/register">
+                        <MenuItem>REGISTER</MenuItem>
+                        </StyledLink> 
+                    </ButtonContainer>
+                        }
+                        {user.currentUser ? 
+                        <StyledLink to="/login">
+                            <ButtonContainer>
+                        <MenuItem onClick={handleSignOut}>SIGN OUT</MenuItem> 
+                        </ButtonContainer>
+                        </StyledLink> 
+                        :
+                        <StyledLink to="/login">
+                            <ButtonContainer>
+                        <MenuItem>SIGN IN</MenuItem>
+                            </ButtonContainer>
+                        </StyledLink>
+                        }
 
-                    {user.currentUser ? 
-                    <Link to="/login">
-                    <MenuItem onClick={handleSignOut}>SIGN OUT</MenuItem> 
-                    </Link> 
-                    :
-                    <Link to="/login">
-                    <MenuItem>SIGN IN</MenuItem>
-                    </Link>
-                    }
-
-                    <Link to="/cart">
+                    <StyledLink to="/cart">
                     <MenuItem>
                         <Badge badgeContent={quanity} color="primary">
                             <ShoppingCartOutlined />
                         </Badge>
                     </MenuItem>
-                    </Link>
+                    </StyledLink>
                 </Right>
             </Wrapper>
             
