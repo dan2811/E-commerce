@@ -3,7 +3,7 @@ import { Search, ShoppingCartOutlined } from '@material-ui/icons';
 import { Badge } from '@material-ui/core'
 import styled from 'styled-components';
 import {mobile, tablet, desktop} from '../responsive';
-import { useSelector, useDispatch as dispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { logOut } from '../redux/userSlice';
 
@@ -54,7 +54,7 @@ const Logo = styled.h1`
     font-weight: bold;
     ${mobile({fontSize: "24px"})}
 
-`
+`;
 
 const Right = styled.div`
 flex: 1;
@@ -78,14 +78,18 @@ const MenuItem = styled.div`
 const Navbar = () => {
 
     const quanity = useSelector(state=>state.cart.quantity);
-    let user = useSelector(state => state.user.currentUser);
+    let user = useSelector(state => state.user);
+    const dispatch = useDispatch();
+
 
     const handleSignOut = (e) => {
         e.preventDefault();
         console.log(`sign out clicked!`);
-        window.location.reload();
+        dispatch(logOut());
+        
     };
 
+    console.log(user);
 
     return (
         <Container>
@@ -101,14 +105,14 @@ const Navbar = () => {
                 <Center><Logo>SHOP.</Logo></Center>
                 </Link>
                 <Right>
-                    {user ? `Hello, ${user.username}`
+                    {user.currentUser ? `Hello, ${user.currentUser.username}`
                     :
                     <Link to="/register">
                     <MenuItem>REGISTER</MenuItem>
                     </Link> 
                     }
 
-                    {user ? 
+                    {user.currentUser ? 
                     <Link to="/login">
                     <MenuItem onClick={handleSignOut}>SIGN OUT</MenuItem> 
                     </Link> 

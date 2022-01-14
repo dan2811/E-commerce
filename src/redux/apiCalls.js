@@ -1,6 +1,6 @@
-import { useDispatch as dispatch} from "react-redux"
+import { useDispatch as dispatch} from "react-redux";
 import { publicRequest } from "../requestMethods";
-import { loginFailure, loginStart, loginSuccess } from "./userSlice"
+import { loginFailure, loginStart, loginSuccess } from "./userSlice";
 
 
 export const login = async (dispatch, user) => {
