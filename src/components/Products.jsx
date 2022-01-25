@@ -16,14 +16,19 @@ const Products = ({cat, filters, sort}) => {
     const [filteredProducts, setFilteredProducts] = useState([]);
 
     useEffect(() => {
+        let mounted = true;
         const getProducts = async () => {
             try{
                 const res = await axios.get( cat ? `http://localhost:5000/api/products?category=${cat}`
                                                     : "http://localhost:5000/api/products"
                                                     );
-                setProducts(res.data);
-                console.log(products);
-            } catch (err) {}
+                if(mounted) {
+                    setProducts(res.data);
+                }
+            } catch (err) {};
+            return () => {
+                mounted = false;
+            }
         };
         getProducts();
      }, [products, cat]);
