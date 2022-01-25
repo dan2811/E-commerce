@@ -167,7 +167,6 @@ const Product = () => {
             <Wrapper>
                 <ImgContainer>
                     <Image src={product.img}/>
-                    {console.log(product.img)}
                 </ImgContainer>
                 <InfoContainer>
                     <Title>{product.title}</Title>

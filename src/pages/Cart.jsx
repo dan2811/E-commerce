@@ -8,7 +8,7 @@ import { useSelector, useDispatch } from "react-redux";
 import StripeCheckout from "react-stripe-checkout";
 import { useEffect, useState } from "react";
 import { userRequest } from "../requestMethods";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { removeProduct } from "../redux/cartRedux";
 
 
@@ -21,6 +21,7 @@ padding: 20px;
 ${mobile({ padding: "10px"})}
 
 `;
+
 const Title = styled.h1`
 font-weight: 300;
 text-align: center;
@@ -177,6 +178,15 @@ color: white;
 font-weight: 600;
 `;
 
+const StyledLink = styled(Link)`
+text-decoration: none;
+color: black;
+
+&:focus, &:hover, &:visited, &:link, &:active {
+    text-decoration: none;
+}
+`;
+
 
 const Cart = () => {
     const cart = useSelector(state => state.cart);
@@ -189,7 +199,6 @@ const Cart = () => {
     };
 
         const handleRemove = (idx) => {
-            console.log(`remove item ${idx}`);
             dispatch(removeProduct(idx));
         };    
 
@@ -219,8 +228,9 @@ const Cart = () => {
                 <Top>
                     <TopButton>CONTINUE SHOPPING</TopButton>
                     <TopTexts>
-                        <TopText>Shopping Basket(2)</TopText>
+                        <StyledLink to={`/wishlist`}>
                         <TopText>Wish List</TopText>
+                        </StyledLink>
                     </TopTexts>
                     <TopButton type="filled">CHECKOUT</TopButton>
                 </Top>

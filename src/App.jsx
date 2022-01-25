@@ -5,6 +5,7 @@ import Product from "./pages/Product";
 import ProductList from "./pages/ProductList";
 import Register from "./pages/Register";
 import Success from "./pages/Success";
+import Wishlist from "./pages/Wishlist";
 import { BrowserRouter as Router,
 Routes,
 Route,
@@ -16,7 +17,6 @@ import { useSelector } from "react-redux";
 
 const App = () => {
    const user = useSelector((state) => state.user);
-   console.log(user);
   return (
     <Router>
       <Routes>
@@ -40,6 +40,10 @@ const App = () => {
       <Routes>
         <Route path="/success" element={<Success />} />
       </Routes>
+      <Routes>
+        <Route path="/wishlist" element={<Wishlist />} />
+      </Routes>
+
     </Router>
   );
 };

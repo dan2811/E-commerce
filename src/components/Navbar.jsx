@@ -99,7 +99,6 @@ const Navbar = () => {
 
     const handleSignOut = (e) => {
         e.preventDefault();
-        console.log(`sign out clicked!`);
         dispatch(logOut());
         navigate("/");
     };
