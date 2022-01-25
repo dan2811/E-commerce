@@ -9,25 +9,26 @@ const cartSlice = createSlice({
     },
     reducers: {
         addProduct:(state, action) => {
-            state.quantity += 1;
-            state.products.push(action.payload);
+            state.quantity += action.payload.quantity;
             state.total += action.payload.price * action.payload.quantity;
+            const indexOfExistingProduct = state.products.findIndex(product => product._id === action.payload._id);
+            console.log(action.payload.color);
+            if(
+                indexOfExistingProduct >= 0 
+                && action.payload.color === state.products[indexOfExistingProduct].color
+                && action.payload.size === state.products[indexOfExistingProduct].size
+                ) {
+                    state.products[indexOfExistingProduct].quantity += action.payload.quantity;
+                    console.log(state.products[indexOfExistingProduct].quantity);
+                    return;
+            }
+            state.products.push(action.payload);
         },
         removeProduct:(state, action) => {
-            // state.quantity -= 1;
-            // Find object(product) in array by its id,
             const idx = action.payload;
-            
             state.total -= (state.products[idx].price * state.products[idx].quantity);
-            console.log(state.total);
+            state.quantity -= state.products[idx].quantity;
             state.products.splice(idx, 1);
-            state.quantity -= 1;
-            
-            // then find the price of the product and the quantity and mulitply together
-            // then take away from cart total(state.total). 
-            // state.total -= targetProduct.price * targetProduct.quantity;
-            // Then filter the array to remove the desired product.
-            // state.products.splice(targetProductIndex, 1);
         },
     },
 });
