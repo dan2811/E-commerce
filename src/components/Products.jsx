@@ -16,22 +16,21 @@ const Products = ({cat, filters, sort}) => {
     const [filteredProducts, setFilteredProducts] = useState([]);
 
     useEffect(() => {
-        let mounted = true;
+        let isSubscribed = true;
         const getProducts = async () => {
             try{
                 const res = await axios.get( cat ? `http://localhost:5000/api/products?category=${cat}`
                                                     : "http://localhost:5000/api/products"
                                                     );
-                if(mounted) {
-                    setProducts(res.data);
-                }
+                    if (isSubscribed) {
+                        setProducts(res.data);
+                    }
             } catch (err) {};
-            return () => {
-                mounted = false;
-            }
         };
-        getProducts();
-     }, [products, cat]);
+            getProducts();
+        return () => {
+        };
+     }, []);
 
      useEffect(() => {
          cat && setFilteredProducts(

@@ -1,7 +1,6 @@
 import {
     createSlice
 } from "@reduxjs/toolkit";
-import { useDispatch as dispatch } from "react-redux";
 
 const cartSlice = createSlice({
     name: "cart",
