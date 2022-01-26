@@ -9,7 +9,7 @@ import StripeCheckout from "react-stripe-checkout";
 import { useEffect, useState } from "react";
 import { userRequest } from "../requestMethods";
 import { useNavigate, Link } from "react-router-dom";
-import { removeProduct } from "../redux/cartRedux";
+import { addProduct, decrementQuantity, incrementQuantity, removeProduct } from "../redux/cartRedux";
 
 
 const KEY = process.env.REACT_APP_STRIPE_KEY;
@@ -202,6 +202,18 @@ const Cart = () => {
             dispatch(removeProduct(idx));
         };    
 
+        const handleIncrement = (idx) => {
+            dispatch(incrementQuantity(idx));
+        };
+
+        const handleDecrement = (idx) => {
+            if(cart.products[idx].quantity === 1) {
+                dispatch(removeProduct(idx));
+            } else {
+                dispatch(decrementQuantity(idx));
+            }
+        };
+
     useEffect(()=>{
         const makeRequest = async ()=>{
             try{
@@ -250,9 +262,9 @@ const Cart = () => {
                             </ProductDetail>
                             <PriceDetail>
                                 <ProductAmountContainer>
-                                    <Add />
+                                    <Remove onClick={() => handleDecrement(idx)}/>
                                         <ProductAmount>{product.quantity}</ProductAmount>
-                                    <Remove />
+                                    <Add onClick={() => handleIncrement(idx)}/>
                                 </ProductAmountContainer>
                                 <ProductPrice>£ {product.price*product.quantity}</ProductPrice>
                                 <DeleteButton onClick={() => handleRemove(idx)} id={product._id}>REMOVE</DeleteButton>

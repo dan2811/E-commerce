@@ -21,29 +21,14 @@ const App = () => {
     <Router>
       <Routes>
         <Route path="/" element={<Home />} />
-      </Routes>
-      <Routes>
         <Route path="/products/:category" element={<ProductList />} />
-      </Routes>
-      <Routes>
         <Route path="/Product/:id" element={<Product />} />
-      </Routes>
-      <Routes>
         <Route path="/Cart" element={<Cart />} />
-      </Routes>
-      <Routes>
         <Route path="/login" element={user.currentUser ? <Navigate to="/"/> : <Login/>} />
-      </Routes>
-      <Routes>
         <Route path="/register" element={user.currentUser ? <Navigate to="/"/> : <Register />} />
-      </Routes>
-      <Routes>
         <Route path="/success" element={<Success />} />
-      </Routes>
-      <Routes>
         <Route path="/wishlist" element={<Wishlist />} />
       </Routes>
-
     </Router>
   );
 };

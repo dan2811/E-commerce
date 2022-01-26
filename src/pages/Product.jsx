@@ -138,13 +138,19 @@ const Product = () => {
     const dispatch = useDispatch();
 
     useEffect(()=>{
+        let mounted = true;
         const getProduct = async ()=>{
             try {
                 const res = await publicRequest.get("/products/find/"+id);
                 setProduct(res.data);
             } catch {}
         };
-        getProduct();
+        if(mounted) {
+            getProduct();
+        }
+        return () => {
+            mounted = false;
+        }
     }, [id]);
 
     const handleQuantity = (type) => {
