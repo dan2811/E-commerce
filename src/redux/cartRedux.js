@@ -35,11 +35,13 @@ const cartSlice = createSlice({
         },
         incrementQuantity: (state, action) => {
             state.products[action.payload].quantity += 1;
+            state.quantity += 1;
             state.total += parseInt(state.products[action.payload].price);
         },
         decrementQuantity: (state, action) => {
             const currentProduct = state.products[action.payload];
             currentProduct.quantity -= 1;
+            state.quantity -= 1;
             state.total -= parseInt(currentProduct.price);
         },
     },
