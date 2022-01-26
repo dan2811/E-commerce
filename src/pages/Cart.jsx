@@ -30,12 +30,13 @@ text-align: center;
 const Top = styled.div`
 display: flex;
 align-items: center;
-justify-content: space-between;
+justify-content: center;
 padding: 20px;
 `;
 
 const TopButton = styled.button`
 padding: 10px;
+margin: 20px;
 font-weight: 600;
 cursor: pointer;
 border: ${props=>props.type === "filled" && "none"};
@@ -67,10 +68,12 @@ flex: 3;
 `;
 
 const Product = styled.div`
+border-bottom: 3px solid #eee;
+margin-bottom: 30px;
+padding-bottom: 30px;
 display: flex;
 justify-content: space-between;
 ${mobile({ flexDirection: "column"})}
-
 `;
 
 const ProductDetail = styled.div`
@@ -128,12 +131,6 @@ font-size: 30px;
 font-weight: 200;
 ${mobile({ marginBottom: "20px"})}
 
-`;
-
-const Hr = styled.hr`
-background-color: #eee;
-border: none;
-height: 2px;
 `;
 
 const Summary = styled.div`
@@ -236,18 +233,19 @@ const Cart = () => {
             <Navbar />
             <Announcement />
             <Wrapper>
-                <Title>YOUR BASKET</Title>
+                <Title>{ cart.products.length > 0 ? "YOUR BASKET" : "YOUR BASKET IS EMPTY!" } </Title>
                 <Top>
+                    <StyledLink to={'/'}>
                     <TopButton>CONTINUE SHOPPING</TopButton>
+                    </StyledLink>
                     <TopTexts>
                         <StyledLink to={`/wishlist`}>
-                        <TopText>Wish List</TopText>
+                        <TopButton>WISH LIST</TopButton>
                         </StyledLink>
                     </TopTexts>
-                    <TopButton type="filled">CHECKOUT</TopButton>
                 </Top>
+                {cart.products.length > 0 ? 
                 <Bottom>
-
                     <Info>
                     {cart.products?.map((product, idx)=>(
                         <Product key={idx}>
@@ -271,7 +269,6 @@ const Cart = () => {
                             </PriceDetail>
                         </Product>
                     ))}
-                    <Hr />
                     </Info>
                     <Summary>
                         <SummaryTitle>ORDER SUMMARY</SummaryTitle>
@@ -307,7 +304,7 @@ const Cart = () => {
                             <Button>CHECKOUT</Button>
                             </StripeCheckout> 
                     </Summary>
-                </Bottom>
+                </Bottom> : "" }
             </Wrapper>
             <Footer />
         </Container>
