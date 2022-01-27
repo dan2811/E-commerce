@@ -1,13 +1,23 @@
 import React from 'react'
-import { useLocation } from 'react-router-dom'
+import styled from "styled-components";
+import Footer from "../components/Footer";
+import Announcement from '../components/Announcement';
+import Navbar from '../components/Navbar';
+
+const Container = styled.div`
+
+`;
 
 const Success = () => {
-    const location = useLocation();
 
     return (
-        <div>
-            success!!
-        </div>
+        <Container>
+            <Navbar />
+            <Announcement />
+            Payment successful
+
+            <Footer />
+        </Container>
     )
 }
 
