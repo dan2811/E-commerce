@@ -8,6 +8,7 @@ const userSlice = createSlice({
         currentUser: null,
         isFetching: false,
         error: false,
+        userLastSavedCart: null,
     },
     reducers: {
         loginStart: (state) => {

@@ -1,6 +1,8 @@
 import styled from "styled-components";
 import {FavoriteBorderOutlined, SearchOutlined } from "@material-ui/icons";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { addProductToWishlist } from "../redux/wishlistSlice"; 
 
 const Info = styled.div`
     opacity: 0;
@@ -65,6 +67,11 @@ const Icon = styled.div`
 `;
 
 const Product = ({item}) => {
+    const dispatch = useDispatch();
+    const handleClick = (item) => {
+        dispatch(addProductToWishlist(item));
+        console.log(item);
+    };
     return (
         <Container>
             <Circle />
@@ -76,7 +83,7 @@ const Product = ({item}) => {
                     </Link>
                 </Icon>
                 <Icon>
-                    <FavoriteBorderOutlined/>
+                    <FavoriteBorderOutlined onClick={() => handleClick(item)}/>
                 </Icon>
             </Info>
         </Container>

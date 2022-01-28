@@ -1,5 +1,5 @@
 import React from 'react'
-import { Search, ShoppingCartOutlined } from '@material-ui/icons';
+import { Search, ShoppingCartOutlined, StarBorderOutlined } from '@material-ui/icons';
 import { Badge } from '@material-ui/core'
 import styled from 'styled-components';
 import {mobile, tablet, desktop} from '../responsive';
@@ -87,11 +87,16 @@ margin: 0px 10px;
 cursor: pointer;
 `;
 
+const IconContainer = styled.div`
+margin-left: 10px;
+`;
+
 
 
 const Navbar = () => {
 
     const quanity = useSelector(state=>state.cart.quantity);
+    const wishlistQuantity = useSelector(state=>state.wishlist.products.length);
     let user = useSelector(state => state.user);
     const dispatch = useDispatch();
     let navigate = useNavigate();
@@ -127,11 +132,9 @@ const Navbar = () => {
                     </ButtonContainer>
                         }
                         {user.currentUser ? 
-                        <StyledLink to="/login">
                             <ButtonContainer>
                         <MenuItem onClick={handleSignOut}>SIGN OUT</MenuItem> 
                         </ButtonContainer>
-                        </StyledLink> 
                         :
                         <StyledLink to="/login">
                             <ButtonContainer>
@@ -147,6 +150,15 @@ const Navbar = () => {
                         </Badge>
                     </MenuItem>
                     </StyledLink>
+                <IconContainer>
+                    <StyledLink to={`/wishlist`}>
+                        <MenuItem>
+                            <Badge badgeContent={wishlistQuantity} color="primary">
+                                <StarBorderOutlined />
+                            </Badge>
+                        </MenuItem>
+                    </StyledLink>
+                </IconContainer>
                 </Right>
             </Wrapper>
             

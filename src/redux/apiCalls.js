@@ -12,6 +12,11 @@ import {
     registerSuccess,
     registerFailure
 } from "./userSlice";
+import {
+    newCartStart,
+    newCartSuccess,
+    newCartFailure
+} from "./cartRedux.js";
 
 
 export const login = async (dispatch, user) => {
@@ -31,5 +36,15 @@ export const register = async (dispatch, user) => {
         dispatch(registerSuccess(res.data));
     } catch (err) {
         dispatch(registerFailure());
+    }
+};
+
+export const newCart = async (dispatch, cart) => {
+    dispatch(newCartStart());
+    try {
+        const res = await publicRequest.post("carts/",  cart);
+        dispatch(newCartSuccess(res.data));
+    } catch (err) {
+        dispatch(newCartFailure());
     }
 }

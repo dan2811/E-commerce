@@ -43,6 +43,17 @@ const cartSlice = createSlice({
             state.quantity -= 1;
             state.total -= parseInt(currentProduct.price);
         },
+        newCartStart: (state, action) => {
+            console.log("new cart started");
+        },
+        newCartSuccess: (state, action) => {
+            state.cart = action.payload;
+            console.log("new cart success");
+        },
+        newCartFailure: (state, action) => {
+            console.log("new cart fail");
+            console.log(action.payload);
+        },
     },
 });
 
@@ -50,6 +61,9 @@ export const {
     addProduct,
     removeProduct,
     incrementQuantity,
-    decrementQuantity
+    decrementQuantity,
+    newCartStart,
+    newCartSuccess,
+    newCartFailure
 } = cartSlice.actions;
 export default cartSlice.reducer;

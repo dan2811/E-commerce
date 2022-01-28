@@ -11,14 +11,15 @@ const wishlistSlice = createSlice({
         addProductToWishlist: (state, action) => {
             state.products.push(action.payload);
         },
-        removeProductToWishlist: (state, action) => {
-            state.splice(action.payload, 1);
-        },
+        removeProductFromWishlist: (state, action) => {
+            state.products.splice(action.payload, 1);
+        }
     },
 });
 
 export const {
     addProductToWishlist,
-    removeProductToWishlist
-} = cartSlice.actions;
+    removeProductFromWishlist
+} = wishlistSlice.actions;
+
 export default wishlistSlice.reducer;

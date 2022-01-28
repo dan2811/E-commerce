@@ -1,8 +1,10 @@
 import styled from "styled-components";
 import { mobile } from "../responsive";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { register } from "../redux/apiCalls";
 import { useState, useEffect } from "react";
+import { newCart } from "../redux/apiCalls";
+
 
 const Container = styled.div`
 width: 100vw;
@@ -58,6 +60,9 @@ color: red;
 
 
 const Register = () => {
+    const cart = useSelector(state => state.cart);
+    const user = useSelector(state => state.user);
+
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [username, setUsername] = useState("");
@@ -75,6 +80,10 @@ const Register = () => {
         email,
         password
     });
+    // newCart(dispatch, {
+    //     userId: user.currentUser._id,
+    //     products: cart.products,
+    // });
     };
 
     useEffect(() => {

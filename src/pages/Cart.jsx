@@ -9,7 +9,7 @@ import StripeCheckout from "react-stripe-checkout";
 import { useEffect, useState } from "react";
 import { userRequest } from "../requestMethods";
 import { useNavigate, Link } from "react-router-dom";
-import { addProduct, decrementQuantity, incrementQuantity, removeProduct } from "../redux/cartRedux";
+import { decrementQuantity, incrementQuantity, removeProduct } from "../redux/cartRedux";
 
 
 const KEY = process.env.REACT_APP_STRIPE_KEY;
@@ -186,7 +186,7 @@ color: black;
 
 
 const Cart = () => {
-    const cart = useSelector(state => state.cart);
+    const cart = useSelector((state) => state.cart);
     const [stripeToken, setStripeToken] = useState(null);
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -218,14 +218,14 @@ const Cart = () => {
                 tokenId: stripeToken.id,
                 amount: cart.total*100,
             });
-            navigate("/success", {
+            navigate("/success", {state:{
                 stripeData: res.data,
-                products: cart,
-        });
+                cart: cart
+        }});
             }catch{}
         };
         stripeToken && cart.total >= 1 && makeRequest();
-    }, [stripeToken, cart, cart.total, navigate]);
+    }, [stripeToken, cart, navigate]);
 
 
     return (

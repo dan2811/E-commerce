@@ -1,16 +1,18 @@
 import axios from "axios";
 
-const BASE_URL = "http://localhost:5000/api/"
-const TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxZGQ5M2MxMTIyNTBlNzgzNzA5NTIwYiIsImlzQWRtaW4iOnRydWUsImlhdCI6MTY0MTkxMTI1NywiZXhwIjoxNjQyMTcwNDU3fQ.chacWZo0nwwiSb7ZEwmGKuqqmKmArgqLY7mB_Uxqnzg";
+const BASE_URL = "http://localhost:5000/api/";
 
+const user = JSON.parse(localStorage.getItem("persist:root"))?.user;
+const currentUser = user && JSON.parse(user).currentUser;
+const TOKEN = currentUser?.accessToken;
+
+axios.defaults.headers.common = {'token': `Bearer ${TOKEN}` };
 
 export const publicRequest = axios.create({
-    baseURL: BASE_URL,
+  baseURL: BASE_URL,
 });
 
 export const userRequest = axios.create({
-    baseURL: BASE_URL,
-    header: {
-        token: `Bearer ${TOKEN}`
-    },
+  baseURL: BASE_URL,
 });
+
